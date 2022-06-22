@@ -275,8 +275,8 @@ void Image_frame::image_equalize(cv::Mat &img, int amp)
     cv::Size eqa_img_size = cv::Size(std::max(img.cols * 32.0 / 640, 4.0), std::max(img.cols * 32.0 / 640, 4.0));
     cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(amp, eqa_img_size);
     // Equalize gray image.
-    clahe->apply(img, img_temp);
-    img = img_temp;
+    // clahe->apply(img, img_temp);
+    // img = img_temp;
 }
 
 inline void image_equalize(cv::Mat &img, int amp)
@@ -285,8 +285,8 @@ inline void image_equalize(cv::Mat &img, int amp)
     cv::Size eqa_img_size = cv::Size(std::max(img.cols * 32.0 / 640, 4.0), std::max(img.cols * 32.0 / 640, 4.0));
     cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(amp, eqa_img_size);
     // Equalize gray image.
-    clahe->apply(img, img_temp);
-    img = img_temp;
+    // clahe->apply(img, img_temp);
+    // img = img_temp;
 }
 
 inline cv::Mat equalize_color_image_Ycrcb(cv::Mat &image)

@@ -50,6 +50,9 @@ Dr. Fu Zhang < fuzhang@hku.hk >.
 #include "tools_mem_used.h"
 #include "tools_logger.hpp"
 
+#define yolo() printf("Hello line: %s:%d. \n", __FILE__ , __LINE__);
+#define yolos(...) printf("Hello line: %s:%d. ", __FILE__, __LINE__); printf(__VA_ARGS__); std::cout << std::endl;
+
 Common_tools::Cost_time_logger              g_cost_time_logger;
 std::shared_ptr< Common_tools::ThreadPool > m_thread_pool_ptr;
 double                                      g_vio_frame_cost_time = 0;

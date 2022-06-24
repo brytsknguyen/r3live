@@ -364,11 +364,15 @@ void oust64_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
         {
             continue;
         }
+
+        Eigen::Vector3d p_inL(pl_orig.points[ i ].x, pl_orig.points[ i ].y, pl_orig.points[ i ].z);
+        Eigen::Vector3d p_inI = R_i2l*p_inL + t_i2l;
+
         Eigen::Vector3d pt_vec;
         PointType       added_pt;
-        added_pt.x = pl_orig.points[ i ].x;
-        added_pt.y = pl_orig.points[ i ].y;
-        added_pt.z = pl_orig.points[ i ].z;
+        added_pt.x = p_inI.x();
+        added_pt.y = p_inI.y();
+        added_pt.z = p_inI.z();
         added_pt.intensity = pl_orig.points[ i ].intensity;
         added_pt.normal_x = 0;
         added_pt.normal_y = 0;

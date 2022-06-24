@@ -200,6 +200,12 @@ void horizon_handler( const livox_ros_driver::CustomMsg::ConstPtr &msg )
 
     uint plsize = msg->point_num;
 
+    Eigen::Matrix3d R_i2l;
+    R_i2l << 0.999906974961810,   0.002542077161583, -0.013401144370135,
+             0.002637980165188,  -0.999971005823696,  0.007143169457867,
+            -0.013382597654389, -0.007177858347038, -0.999884684008097;
+    Eigen::Vector3d t_i2l(-0.007717581016749, 0.016170931320835, 0.037722280602153);
+
     pl_corn.reserve( plsize );
     pl_surf.reserve( plsize );
     pl_full.resize( plsize );
@@ -228,9 +234,13 @@ void horizon_handler( const livox_ros_driver::CustomMsg::ConstPtr &msg )
                 continue;
             }
         // clang-format on
-            pl_full[ i ].x = msg->points[ i ].x;
-            pl_full[ i ].y = msg->points[ i ].y;
-            pl_full[ i ].z = msg->points[ i ].z;
+
+            Eigen::Vector3d p_inL(msg->points[ i ].x, msg->points[ i ].y, msg->points[ i ].z);
+            Eigen::Vector3d p_inI = R_i2l*p_inL + t_i2l;
+
+            pl_full[ i ].x = p_inI.x();
+            pl_full[ i ].y = p_inI.y();
+            pl_full[ i ].z = p_inI.z();
             pl_full[ i ].intensity = msg->points[ i ].reflectivity;
 
             pl_full[ i ].curvature = msg->points[ i ].offset_time / float( 1000000 ); // use curvature as time of each laser points
@@ -375,9 +385,9 @@ void oust64_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
             }
         }
     }
-    pub_func( pl_processed, pub_full, msg->header.stamp );
-    pub_func( pl_processed, pub_surf, msg->header.stamp );
-    pub_func( pl_processed, pub_corn, msg->header.stamp );
+    pub_func( pl_processed, pub_full, msg->header.stamp - ros::Duration(0.1) );
+    pub_func( pl_processed, pub_surf, msg->header.stamp - ros::Duration(0.1) );
+    pub_func( pl_processed, pub_corn, msg->header.stamp - ros::Duration(0.1) );
 }
 
 

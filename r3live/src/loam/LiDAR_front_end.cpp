@@ -89,6 +89,9 @@ int    plane_judge( const pcl::PointCloud< PointType > &pl, vector< orgtype > &t
 bool   small_plane( const pcl::PointCloud< PointType > &pl, vector< orgtype > &types, uint i_cur, uint &i_nex, Eigen::Vector3d &curr_direct );
 bool   edge_jump_judge( const pcl::PointCloud< PointType > &pl, vector< orgtype > &types, uint i, Surround nor_dir );
 
+Eigen::Matrix3d R_i2l;
+Eigen::Vector3d t_i2l;
+
 int main( int argc, char **argv )
 {
     ros::init( argc, argv, "feature_extract" );
@@ -115,6 +118,16 @@ int main( int argc, char **argv )
     n.param< int >( "Lidar_front_end/point_filter_num", point_filter_num, 1 );
     n.param< int >( "Lidar_front_end/point_step", g_LiDAR_sampling_point_step, 3 );
     n.param< int >( "Lidar_front_end/using_raw_point", g_if_using_raw_point, 1 );
+    
+    // Reading the extrinsics of the lidars
+    vector<double> T_B2L_ = {1, 0, 0, 0,
+                             0, 1, 0, 0,
+                             0, 0, 1, 0,
+                             0, 0, 0, 1};
+    n.param("T_B2L", T_B2L_);
+    Eigen::Matrix4d T_B2L = Eigen::Matrix<double, 4, 4, Eigen::RowMajor>(&T_B2L_[0]);
+    R_i2l = T_B2L.block<3, 3>(0, 0);
+    t_i2l = T_B2L.block<3, 1>(0, 3);
 
     jump_up_limit = cos( jump_up_limit / 180 * M_PI );
     jump_down_limit = cos( jump_down_limit / 180 * M_PI );
@@ -201,8 +214,8 @@ void horizon_handler( const livox_ros_driver::CustomMsg::ConstPtr &msg )
     uint plsize = msg->point_num;
 
     Eigen::Matrix3d R_i2l;
-    R_i2l << 0.999906974961810,   0.002542077161583, -0.013401144370135,
-             0.002637980165188,  -0.999971005823696,  0.007143169457867,
+    R_i2l << 0.999906974961810,  0.002542077161583,  -0.013401144370135,
+             0.002637980165188, -0.999971005823696,  0.007143169457867,
             -0.013382597654389, -0.007177858347038, -0.999884684008097;
     Eigen::Vector3d t_i2l(-0.007717581016749, 0.016170931320835, 0.037722280602153);
 

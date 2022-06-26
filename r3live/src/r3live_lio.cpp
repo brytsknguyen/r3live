@@ -542,12 +542,24 @@ int R3LIVE::service_LIO_update()
         std::unique_lock< std::mutex > lock( m_mutex_lio_process );
         if ( 1 )
         {
+            static ros::Time last_meas_time = ros::Time(0);
+
             // printf_line;
             Common_tools::Timer tim;
-            if ( sync_packages( Measures ) == 0 )
+            bool buffer_has_data = sync_packages( Measures );
+            if ( buffer_has_data == 0 )
             {
-                continue;
+                if (last_meas_time.toSec() == 0 || (ros::Time::now() - last_meas_time).toSec() < 30.0)
+                    continue;
+                else
+                {
+                    printf("Data buffer time out. Exitting\n");
+                    exit(0);
+                }
             }
+
+            last_meas_time = ros::Time::now();
+
             int lidar_can_update = 1;
             g_lidar_star_tim = frame_first_pt_time;
             if ( flg_reset )

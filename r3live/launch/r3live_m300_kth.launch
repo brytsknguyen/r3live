@@ -1,20 +1,23 @@
 <launch>
 
-    <arg name="bag_file" default="/media/tmn/mySataSSD3/ATVCollectedNoDepth/daytime_01.bag" />
+    <!-- <arg name="bag_file" default="/media/tmn/mySataSSD3/ATVCollectedNoDepth/daytime_01.bag" /> -->
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-30-50.bag" /> -->
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-23-24.bag" /> -->
+    <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-35-40.bag" />
 
     <!-- Subscribed topics -->
     <param name="LiDAR_pointcloud_topic" type="string" value= "/laser_cloud_flat" />
-    <param name="IMU_topic" type="string" value= "/os_cloud_node/imu" />
-    <param name="/Image_topic" type="string" value= "/camera_rs_D455/color/image_raw_yolo" />
+    <param name="IMU_topic" type="string" value= "/livox/imu" />
+    <param name="/Image_topic" type="string" value= "/pylon_camera_node/image_raw_yolo" />
     <param name="r3live_common/map_output_dir" type="string" value="$(env HOME)/r3live_output" />
     <rosparam command="load" file="$(find r3live)/../config/r3live_config_atv.yaml" />
-    
-    <param name="Lidar_front_end/lidar_type" type="int" value="3" />
-    <param name="Lidar_front_end/N_SCANS"    type="int" value="128" />
+
+    <param name="Lidar_front_end/lidar_type" type="int" value="1" />
+    <param name="Lidar_front_end/N_SCANS"    type="int" value="6" />
     <!-- <rosparam param="Lidar_front_end/T_B2L"> [ 0.999906974961810,  0.002542077161583, -0.013401144370135, -0.007717581016749,
                                                0.002637980165188, -0.999971005823696,  0.007143169457867,  0.016170931320835,
                                               -0.013382597654389, -0.007177858347038, -0.999884684008097,  0.037722280602153,
-                                               0,                  0,                  0,                  1.000000000000000] </rosparam> -->
+                                               0,                  0,                  0,                  1.0] </rosparam> -->
 
     <node pkg="r3live" type="r3live_LiDAR_front_end" name="r3live_LiDAR_front_end" output="screen" required="true"/>
     <node pkg="r3live" type="r3live_mapping" name="r3live_mapping" output="screen" required="true" />
@@ -24,8 +27,7 @@
         <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find r3live)/../config/rviz/r3live_rviz_atv_hall7.rviz" />
     </group>
 
-    <node pkg="rosbag" type="play" name="player"
-          args="$(arg bag_file) -r 1.0 -s 0"/>
+    <node pkg="rosbag" type="play" name="player" args="$(arg bag_file) -r 1.0 -s 22.0"/>
     
     <!-- Decompress image -->
     <!-- <node pkg="image_transport" type="republish" name="img_decompress"

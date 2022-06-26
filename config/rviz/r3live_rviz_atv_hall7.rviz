@@ -4,9 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /LIO1
-        - /LIO1/pointcloud_map1
+        - /LIO1/PointCloud21
         - /LIO1/Odometry2/Shape1
         - /RGB_map1/PointCloud21
         - /RGB_map1/PointCloud22
@@ -19,7 +17,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Input image
+    SyncSource: pointcloud_map
   - Class: rviz/Displays
     Help Height: 138
     Name: Displays
@@ -52,7 +50,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 1
+      Cell Size: 100
       Class: rviz/Grid
       Color: 130; 130; 130
       Enabled: true
@@ -109,8 +107,8 @@ Visualization Manager:
         - Alpha: 0.15000000596046448
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 26.66150665283203
-            Min Value: -0.5750980377197266
+            Max Value: 57.99662780761719
+            Min Value: 18.186477661132812
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -146,7 +144,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: FlatColor
           Decay Time: 0
-          Enabled: false
+          Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Min Color: 0; 0; 0
@@ -161,7 +159,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: false
+          Value: true
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -2054,7 +2052,7 @@ Visualization Manager:
       Name: RGB_map
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /camera_rs_D435i/color/image_raw
+      Image Topic: /pylon_camera_node/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -2080,7 +2078,7 @@ Visualization Manager:
   Global Options:
     Background Color: 0; 0; 0
     Default Light: true
-    Fixed Frame: viz
+    Fixed Frame: world
     Frame Rate: 60
   Name: root
   Tools:
@@ -2102,25 +2100,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 60.38364791870117
+      Distance: 279.3299865722656
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.9914321899414062
-        Y: -2.078368663787842
-        Z: 0.3340025842189789
+        X: 17.950233459472656
+        Y: -6.963622570037842
+        Z: 58.32754135131836
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.289796233177185
+      Pitch: 0.46020182967185974
       Target Frame: aft_mapped
       Value: Orbit (rviz)
-      Yaw: 3.4777493476867676
+      Yaw: 3.217754364013672
     Saved:
       - Class: rviz/ThirdPersonFollower
         Distance: 2.466799259185791

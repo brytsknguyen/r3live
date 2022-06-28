@@ -1,9 +1,15 @@
 <launch>
 
     <!-- <arg name="bag_file" default="/media/tmn/mySataSSD3/ATVCollectedNoDepth/daytime_01.bag" /> -->
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-43-02.bag" /> -->
     <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-30-50.bag" /> -->
     <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-23-24.bag" /> -->
-    <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-35-40.bag" />
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-13-35-40.bag" /> -->
+
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-17-58-09_trimmed.bag" /> -->
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-18-05-36_trimmed.bag" /> -->
+    <!-- <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-18-11-46_trimmed.bag" /> -->
+    <arg name="bag_file" default="/media/tmn/mySDSSD/tmn__2022-06-26-18-16-43_trimmed.bag" />
 
     <!-- Subscribed topics -->
     <param name="LiDAR_pointcloud_topic" type="string" value= "/laser_cloud_flat" />
@@ -20,14 +26,16 @@
                                                0,                  0,                  0,                  1.0] </rosparam> -->
 
     <node pkg="r3live" type="r3live_LiDAR_front_end" name="r3live_LiDAR_front_end" output="screen" required="true"/>
-    <node pkg="r3live" type="r3live_mapping" name="r3live_mapping" output="screen" required="true" />
-    
+    <node pkg="r3live" type="r3live_mapping" name="r3live_mapping" output="screen" required="true" >
+          <param name="auto_run" type="bool" value="true"/>
+    </node>
+
     <arg name="rviz" default="1" />
     <group if="$(arg rviz)">
         <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find r3live)/../config/rviz/r3live_rviz_atv_hall7.rviz" />
     </group>
 
-    <node pkg="rosbag" type="play" name="player" args="$(arg bag_file) -r 1.0 -s 22.0"/>
+    <node pkg="rosbag" type="play" name="player" args="$(arg bag_file) -r 1.0 -s 0.0"/>
     
     <!-- Decompress image -->
     <!-- <node pkg="image_transport" type="republish" name="img_decompress"

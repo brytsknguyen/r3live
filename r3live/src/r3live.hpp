@@ -128,6 +128,9 @@ class R3LIVE
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+    bool auto_run = false;
+
     std::mutex  m_mutex_lio_process;
     std::shared_ptr<ImuProcess> m_imu_process;
     std::string root_dir = ROOT_DIR;
@@ -391,6 +394,9 @@ public:
             get_ros_parameter( m_ros_node_handle, "r3live_lio/long_rang_pt_dis", m_long_rang_pt_dis, 500.0 );
             get_ros_parameter( m_ros_node_handle, "r3live_lio/publish_feature_map", m_if_publish_feature_map, false );
             get_ros_parameter( m_ros_node_handle, "r3live_lio/lio_update_point_step", m_lio_update_point_step, 1 );
+
+            get_ros_parameter( m_ros_node_handle, "r3live_mapping/auto_run", auto_run, false );
+            printf("autorun: %s\n", auto_run ? "true" : "false");
         }
         if ( 1 )
         {

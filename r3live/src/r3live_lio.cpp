@@ -549,7 +549,7 @@ int R3LIVE::service_LIO_update()
             bool buffer_has_data = sync_packages( Measures );
             if ( buffer_has_data == 0 )
             {
-                if (last_meas_time.toSec() == 0 || (ros::Time::now() - last_meas_time).toSec() < 30.0)
+                if (last_meas_time.toSec() == 0 || (ros::Time::now() - last_meas_time).toSec() < 30.0 || !auto_run)
                     continue;
                 else
                 {

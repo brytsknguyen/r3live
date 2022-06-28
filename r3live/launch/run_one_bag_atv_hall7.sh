@@ -109,6 +109,7 @@ fi
 
 # Start the process
 roslaunch r3live r3live_atv_hall7.launch \
+auto_run:=true \
 bag_file:=$BAG_FILE; \
 
 # Kill all nodes that are still running

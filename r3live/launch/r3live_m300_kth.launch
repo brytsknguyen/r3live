@@ -42,6 +42,8 @@
           args="compressed in:=/camera/image_color/ raw out:=/camera/image_color"
           output="screen" respawn="true"/> -->
 
+    <node pkg="r3live" type="rotate_image.py" name="rotate_image" output="screen" ></node>
+
     <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="world_viz" args="0 0 0 0 0 3.14159265359 world viz" /> -->
 
 </launch>
